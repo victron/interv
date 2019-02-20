@@ -1,0 +1,41 @@
+
+class LinkElement:
+    def __init__(self, val, obj=None):
+        self.val = val
+        self.link = obj
+
+
+class LinkList:
+    def __init__(self):
+        self.list = []
+
+    def get_last(self):
+        try:
+            return self.list[-1]
+        except IndexError:
+            return None
+
+    def append(self, val):
+        last_el = self.get_last()
+        self.list.append(LinkElement(val, last_el))
+
+    def print(self):
+        for i, obj in enumerate(self.list):
+            print('idx=', i, 'val=', obj.val, 'obj=', obj, 'lobj=', obj.link)
+
+    def swap(self, idx1: int, idx2: int):
+        try:
+            temp_l = self.list[:idx1] + [self.list[idx2], ] + self.list[idx1+1:]
+        except IndexError:
+            temp_l = self.list[:idx1] + [self.list[idx2], ]
+
+        try:
+            temp_l = temp_l[:idx2] + [self.list[idx1], ] + temp_l[idx2 + 1:]
+        except IndexError:
+            temp_l = temp_l[:idx2] + [self.list[idx1], ]
+
+        self.list = []
+        for o in temp_l:
+            self.append(o.val)
+
+
